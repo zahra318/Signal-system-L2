@@ -1,0 +1,1274 @@
+#T1
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+x = np.array([1, 2, 0, -1])  # x[n]
+h = np.array([2, 0, -2])  # h[n]
+
+# محاسبه کانولوشن برای هر حالت
+y1 = np.convolve(x, h, mode='full')  # y1[n] = x[n] * h[n]
+y2 = np.convolve(np.roll(x, -2), h, mode='full')  # y2[n] = x[n+2] * h[n]
+y3 = np.convolve(x, np.roll(h, 2), mode='full')  # y3[n] = x[n] * h[n+2]
+
+# رسم نمودارها
+plt.figure(figsize=(12, 6))
+
+plt.subplot(3, 1, 1)
+plt.stem(y1)
+plt.title('y1[n] = x[n] * h[n]')
+
+plt.subplot(3, 1, 2)
+plt.stem(y2)
+plt.title('y2[n] = x[n+2] * h[n]')
+
+plt.subplot(3, 1, 3)
+plt.stem(y3)
+plt.title('y3[n] = x[n] * h[n+2]')
+
+plt.tight_layout()
+plt.show()
+#T2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# سوال 2.2
+def h(n):
+    return (0.5) ** (n - 1) * ((n >= -3) & (n <= 9))
+
+
+# رسم نمودار سوال 2.2
+n_values = np.arange(-5, 15)
+h_values = h(n_values)
+
+plt.figure(figsize=(8, 4))
+plt.stem(n_values, h_values)
+plt.title('h[n] برای سوال 2.2')
+plt.xlabel('n')
+plt.ylabel('h[n]')
+plt.grid(True)
+plt.show()
+
+#T3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(-5, 10)  # بازه زمانی
+x = (0.5) ** (n - 2) * (n >= 2)  # x[n]
+h = (n >= -2)  # h[n]
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x[:len(n)])
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h[:len(n)])
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)) - 5, y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T4
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(0, 20)  # بازه زمانی
+x = np.zeros(20)
+x[3:9] = 1
+h = np.zeros(20)
+h[4:16] = 1
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x)
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h)
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)), y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T5
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# سوال 2.5
+def convolution(x, h):
+    y = np.convolve(x, h, mode='full')
+    return y
+
+N = 4
+x = np.ones(10)
+h = np.ones(N + 1)
+y = convolution(x, h)
+
+print(f"مقدار N برای سوال 2.5 برابر است با: {N}")
+print(f"مقدار y[4] برابر است با: {y[4]}")
+print(f"مقدار y[14] برابر است با: {y[14]}")
+
+# رسم نمودار سوال 2.5
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(np.arange(len(x)), x)
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(np.arange(len(h)), h)
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)), y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T6
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(-10, 10)  # بازه زمانی
+x = (1/3) ** (-n) * (n <= -1)  # x[n]
+h = (n >= 1)  # h[n]
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x[:len(n)])
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h[:len(n)])
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)) - 10, y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+
+#T7
+import numpy as np
+import matplotlib.pyplot as plt
+
+def g(n):
+    return (n >= 0) * (n < 4)
+
+def y(x, n):
+    result = 0
+    for k in range(-10, 10):  # بازه زمانی مناسب را انتخاب کنید
+        if n - 2 * k >= -10 and n - 2 * k <= 10:
+            result += x[k + 10] * g(n - 2 * k)
+    return result
+
+n = np.arange(-5, 10)
+x1 = np.zeros(20)
+x1[11] = 1  # delta[n-1]
+x2 = np.zeros(20)
+x2[12] = 1  # delta[n-2]
+x3 = np.ones(15) # u[n]
+
+y1 = [y(x1, i) for i in n]
+y2 = [y(x2, i) for i in n]
+y3 = [y(x3, i) for i in n]
+
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 3, 1)
+plt.stem(n, y1)
+plt.title('y[n] for delta[n-1]')
+plt.subplot(1, 3, 2)
+plt.stem(n, y2)
+plt.title('y[n] for delta[n-2]')
+plt.subplot(1, 3, 3)
+plt.stem(n, y3)
+plt.title('y[n] for u[n]')
+plt.tight_layout()
+plt.show()
+
+#T8
+import numpy as np
+import matplotlib.pyplot as plt
+
+def x(t):
+    if 0 <= t <= 1:
+        return t + 1
+    elif 1 < t <= 2:
+        return 2 - t
+    else:
+        return 0
+
+def h(t):
+    if t == -2:
+        return 1
+    elif t == -1:
+        return 2
+    else:
+        return 0
+
+t = np.arange(-3, 4, 0.1)
+y = [x(ti + 2) + 2 * x(ti + 1) for ti in t]
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('y(t) = x(t) * h(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T9
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h(t):
+    return np.exp(2 * t) * (t <= 4) + np.exp(-2 * t) * (t >= 5)
+
+t = np.arange(0, 10, 0.1)
+y = h(t)
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('h(t)')
+plt.xlabel('t')
+plt.ylabel('h(t)')
+plt.grid(True)
+plt.show()
+
+#T10
+import numpy as np
+import matplotlib.pyplot as plt
+
+alpha = 0.5  # مقدار آلفا را تنظیم کنید
+
+def x(t):
+    return (0 <= t <= 1)
+
+def h(t):
+    return x(t / alpha)
+
+t = np.arange(-1, 2, 0.1)
+y = np.convolve([x(ti) for ti in t], [h(ti) for ti in t], mode='same')
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('y(t) = x(t) * h(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T11
+import numpy as np
+import matplotlib.pyplot as plt
+
+def x(t):
+    return (3 <= t <= 5)
+
+def h(t):
+    return np.exp(-3 * t) * (t >= 0)
+
+t = np.arange(0, 10, 0.1)
+y = np.convolve([x(ti) for ti in t], [h(ti) for ti in t], mode='full')
+dx = np.gradient([x(ti) for ti in t], 0.1)
+g = np.convolve(dx, [h(ti) for ti in t], mode='full')
+
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.plot(y)
+plt.title('y(t) = x(t) * h(t)')
+plt.subplot(1, 2, 2)
+plt.plot(g)
+plt.title('g(t) = dx(t)/dt * h(t)')
+plt.tight_layout()
+plt.show()
+
+#T12
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(t):
+    result = 0
+    for k in range(-5, 5):  # بازه زمانی مناسب را انتخاب کنید
+        result += np.exp(-(t - 3 * k)) * ((t - 3 * k) >= 0)
+    return result
+
+t = np.arange(0, 10, 0.1)
+y_values = [y(ti) for ti in t]
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y_values)
+plt.title('y(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T13
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h(n):
+    return (1/5)**n * (n >= 0)
+
+# (الف)
+A = 1/5
+print(f"مقدار A: {A}")
+
+# (ب)
+# g[n] = 5 * delta[n] - delta[n-1]
+def g(n):
+    if n == 0:
+        return 5
+    elif n == 1:
+        return -1
+    else:
+        return 0
+
+n = np.arange(-2, 5)
+h_values = h(n)
+g_values = [g(i) for i in n]
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.stem(n, h_values)
+plt.title('h[n]')
+plt.subplot(1, 2, 2)
+plt.stem(n, g_values)
+plt.title('g[n]')
+plt.tight_layout()
+plt.show()
+
+#T14
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h1(t):
+    return np.exp(-abs(t - 2)) * (t >= 0)
+
+def h2(t):
+    return np.exp(-t) * np.cos(2 * t) * (t >= 0)
+
+t = np.arange(0, 5, 0.1)
+y1 = h1(t)
+y2 = h2(t)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.plot(t, y1)
+plt.title('h1(t)')
+plt.subplot(1, 2, 2)
+plt.plot(t, y2)
+plt.title('h2(t)')
+plt.tight_layout()
+plt.show()
+
+# برای بررسی پایداری، انتگرال مطلق را بررسی کنید (به صورت عددی)
+print(f"انتگرال h1: {np.sum(np.abs(y1)) * 0.1}")
+print(f"انتگرال h2: {np.sum(np.abs(y2)) * 0.1}")
+
+#T15
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h1(n):
+    return n * np.cos(np.pi / 4 * n) * (n >= 0)
+
+def h2(n):
+    return 3**n * (n <= 10)
+
+n = np.arange(0, 15)
+y1 = h1(n)
+y2 = h2(n)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.stem(n, y1)
+plt.title('h1[n]')
+plt.subplot(1, 2, 2)
+plt.stem(n, y2)
+plt.title('h2[n]')
+plt.tight_layout()
+plt.show()
+
+# برای بررسی پایداری، مجموع مطلق را بررسی کنید
+print(f"مجموع h1: {np.sum(np.abs(y1))}")
+print(f"مجموع h2: {np.sum(np.abs(y2))}")
+
+#T16
+import numpy as np
+
+# (الف)
+x = np.array([1, 2, 3])
+h = np.array([4, 5, 6])
+y = np.convolve(x, h)
+print(f"کانولوشن: {y}")
+
+# (ب)
+x = np.array([1, 2, 3])
+h = np.array([4, 5, 6])
+y = np.convolve(x, h)
+y_shifted = np.convolve(np.roll(x, -1), np.roll(h, -1))
+print(f"y[n-1]: {y_shifted}")
+
+# (ج)
+# ...
+
+# (د)
+# ...
+
+#T17
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(t, x):
+    # حل معادله دیفرانسیل به صورت عددی
+    dt = 0.01
+    y_values = [0]
+    for i in range(1, len(t)):
+        dy = x[i] - 4 * y_values[i - 1]
+        y_values.append(y_values[i - 1] + dy * dt)
+    return np.array(y_values)
+
+t = np.arange(0, 5, 0.01)
+
+# (الف)
+x1 = np.exp(-t) * (t >= 0)
+y1 = y(t, x1)
+
+# (ب)
+x2 = np.exp(-t) * np.cos(3 * t) * (t >= 0)
+y2 = y(t, x2)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.plot(t, y1)
+plt.title('y(t) for x1(t)')
+plt.subplot(1, 2, 2)
+plt.plot(t, y2)
+plt.title('y(t) for x2(t)')
+plt.tight_layout()
+plt.show()
+
+#T18
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(x):
+    y_values = [0]
+    for i in range(1, len(x)):
+        y_values.append(0.25 * y_values[i - 1] + x[i])
+    return np.array(y_values)
+
+n = np.arange(0, 10)
+x = np.ones(10)
+y_values = y(x)
+
+plt.figure(figsize=(8, 4))
+plt.stem(n, y_values)
+plt.title('y[n]')
+plt.xlabel('n')
+plt.ylabel('y[n]')
+plt.grid(True)
+plt.show()
+
+#T19
+import numpy as np
+import matplotlib.pyplot as plt
+
+# (الف)
+alpha = 0.75
+beta = 1
+print(f"مقدار آلفا: {alpha}")
+print(f"مقدار بتا: {beta}")
+
+# (ب)
+def h1(n):
+    if n == 0:
+        return 1
+    else:
+        return 0.5 * h1(n - 1)
+
+def h2(n):
+    if n == 0:
+        return beta
+    else:
+        return alpha * h2(n - 1)
+
+def h_cascade(n):
+    result = 0
+    for k in range(n + 1):
+        result += h1(k) * h2(n - k)
+    return result
+
+n = np.arange(0, 5)
+h_values = [h_cascade(i) for i in n]
+
+plt.figure(figsize=(8, 4))
+plt.stem(n, h_values)
+plt.title('پاسخ ضربه سیستم متوالی')
+plt.xlabel('n')
+plt.ylabel('h[n]')
+plt.grid(True)
+plt.show()
+
+#T20
+import numpy as np
+import sympy as sp
+
+# (الف)
+t = sp.Symbol('t')
+integral_a = sp.integrate(sp.cos(t), (t, -sp.oo, sp.oo))
+print(f"انتگرال (الف): {integral_a}")
+
+# (ب)
+integral_b = sp.integrate(sp.sin(2 * sp.pi * t) * sp.DiracDelta(t + 3), (t, 0, 5))
+print(f"انتگرال (ب): {integral_b}")
+
+# (ج)
+tau = sp.Symbol('tau')
+integral_c = sp.integrate(sp.Heaviside(1 - tau) * sp.cos(2 * sp.pi * tau), (tau, -5, 5))
+print(f"انتگرال (ج): {integral_c}")
+
+
+#T21
+import numpy as np
+import matplotlib.pyplot as plt
+
+# (الف)
+def convolution_a(n):
+    return (n + 1) * (n >= 0)
+
+# (ب)
+def convolution_b(n, a, b):
+    if a == b:
+        return (n + 1) * a**n * (n >= 0)
+    else:
+        return (a**(n + 1) - b**(n + 1)) / (a - b) * (n >= 0)
+
+# (ج)
+def convolution_c(n):
+    result = 0
+    for k in range(-10, 10):
+        if 2 - k >= -10 and 2 - k <= 10 and n - k >= 4 and n - k <= 10:
+            result += (-0.5)**(n - k) * 4**k
+    return result
+
+# (د)
+x = np.array([0, 0, 1, 1, 1, 0, 0])
+h = np.array([0, 0, 0, 0, 1, 1, 1, 1, 0, 0])
+y_d = np.convolve(x, h)
+
+n = np.arange(0, 10)
+y_a = convolution_a(n)
+y_b = convolution_b(n, 0.5, 0.8)
+y_c = [convolution_c(i) for i in n]
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 2, 1)
+plt.stem(n, y_a)
+plt.title('کانولوشن (الف)')
+plt.subplot(2, 2, 2)
+plt.stem(n, y_b)
+plt.title('کانولوشن (ب)')
+plt.subplot(2, 2, 3)
+plt.stem(n, y_c)
+plt.title('کانولوشن (ج)')
+plt.subplot(2, 2, 4)
+plt.stem(np.arange(len(y_d)), y_d)
+plt.title('کانولوشن (د)')
+plt.tight_layout()
+plt.show()
+
+#T22
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
+
+# مثال 1: x(t) = u(t), h(t) = e^-t u(t)
+t = np.arange(0, 5, 0.1)
+x = np.ones(len(t))
+h = np.exp(-t)
+y = signal.convolve(x, h, mode='same') * 0.1
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('کانولوشن مثال 1')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+# مثال 2: x(t) = rect(t), h(t) = tri(t)
+# ... (محاسبات و رسم نمودار برای مثال‌های دیگر)
+
+
+#T23
+#T1
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+x = np.array([1, 2, 0, -1])  # x[n]
+h = np.array([2, 0, -2])  # h[n]
+
+# محاسبه کانولوشن برای هر حالت
+y1 = np.convolve(x, h, mode='full')  # y1[n] = x[n] * h[n]
+y2 = np.convolve(np.roll(x, -2), h, mode='full')  # y2[n] = x[n+2] * h[n]
+y3 = np.convolve(x, np.roll(h, 2), mode='full')  # y3[n] = x[n] * h[n+2]
+
+# رسم نمودارها
+plt.figure(figsize=(12, 6))
+
+plt.subplot(3, 1, 1)
+plt.stem(y1)
+plt.title('y1[n] = x[n] * h[n]')
+
+plt.subplot(3, 1, 2)
+plt.stem(y2)
+plt.title('y2[n] = x[n+2] * h[n]')
+
+plt.subplot(3, 1, 3)
+plt.stem(y3)
+plt.title('y3[n] = x[n] * h[n+2]')
+
+plt.tight_layout()
+plt.show()
+#T2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# سوال 2.2
+def h(n):
+    return (0.5) ** (n - 1) * ((n >= -3) & (n <= 9))
+
+
+# رسم نمودار سوال 2.2
+n_values = np.arange(-5, 15)
+h_values = h(n_values)
+
+plt.figure(figsize=(8, 4))
+plt.stem(n_values, h_values)
+plt.title('h[n] برای سوال 2.2')
+plt.xlabel('n')
+plt.ylabel('h[n]')
+plt.grid(True)
+plt.show()
+
+#T3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(-5, 10)  # بازه زمانی
+x = (0.5) ** (n - 2) * (n >= 2)  # x[n]
+h = (n >= -2)  # h[n]
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x[:len(n)])
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h[:len(n)])
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)) - 5, y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T4
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(0, 20)  # بازه زمانی
+x = np.zeros(20)
+x[3:9] = 1
+h = np.zeros(20)
+h[4:16] = 1
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x)
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h)
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)), y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T5
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# سوال 2.5
+def convolution(x, h):
+    y = np.convolve(x, h, mode='full')
+    return y
+
+N = 4
+x = np.ones(10)
+h = np.ones(N + 1)
+y = convolution(x, h)
+
+print(f"مقدار N برای سوال 2.5 برابر است با: {N}")
+print(f"مقدار y[4] برابر است با: {y[4]}")
+print(f"مقدار y[14] برابر است با: {y[14]}")
+
+# رسم نمودار سوال 2.5
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(np.arange(len(x)), x)
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(np.arange(len(h)), h)
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)), y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+#T6
+import numpy as np
+import matplotlib.pyplot as plt
+
+# تعریف سیگنال‌ها
+n = np.arange(-10, 10)  # بازه زمانی
+x = (1/3) ** (-n) * (n <= -1)  # x[n]
+h = (n >= 1)  # h[n]
+
+# محاسبه کانولوشن
+y = np.convolve(x, h, mode='full')
+
+# رسم نمودارها
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.stem(n, x[:len(n)])
+plt.title('x[n]')
+
+plt.subplot(1, 3, 2)
+plt.stem(n, h[:len(n)])
+plt.title('h[n]')
+
+plt.subplot(1, 3, 3)
+plt.stem(np.arange(len(y)) - 10, y)
+plt.title('y[n] = x[n] * h[n]')
+
+plt.tight_layout()
+plt.show()
+
+
+#T7
+import numpy as np
+import matplotlib.pyplot as plt
+
+def g(n):
+    return (n >= 0) * (n < 4)
+
+def y(x, n):
+    result = 0
+    for k in range(-10, 10):  # بازه زمانی مناسب را انتخاب کنید
+        if n - 2 * k >= -10 and n - 2 * k <= 10:
+            result += x[k + 10] * g(n - 2 * k)
+    return result
+
+n = np.arange(-5, 10)
+x1 = np.zeros(20)
+x1[11] = 1  # delta[n-1]
+x2 = np.zeros(20)
+x2[12] = 1  # delta[n-2]
+x3 = np.ones(15) # u[n]
+
+y1 = [y(x1, i) for i in n]
+y2 = [y(x2, i) for i in n]
+y3 = [y(x3, i) for i in n]
+
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 3, 1)
+plt.stem(n, y1)
+plt.title('y[n] for delta[n-1]')
+plt.subplot(1, 3, 2)
+plt.stem(n, y2)
+plt.title('y[n] for delta[n-2]')
+plt.subplot(1, 3, 3)
+plt.stem(n, y3)
+plt.title('y[n] for u[n]')
+plt.tight_layout()
+plt.show()
+
+#T8
+import numpy as np
+import matplotlib.pyplot as plt
+
+def x(t):
+    if 0 <= t <= 1:
+        return t + 1
+    elif 1 < t <= 2:
+        return 2 - t
+    else:
+        return 0
+
+def h(t):
+    if t == -2:
+        return 1
+    elif t == -1:
+        return 2
+    else:
+        return 0
+
+t = np.arange(-3, 4, 0.1)
+y = [x(ti + 2) + 2 * x(ti + 1) for ti in t]
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('y(t) = x(t) * h(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T9
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h(t):
+    return np.exp(2 * t) * (t <= 4) + np.exp(-2 * t) * (t >= 5)
+
+t = np.arange(0, 10, 0.1)
+y = h(t)
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('h(t)')
+plt.xlabel('t')
+plt.ylabel('h(t)')
+plt.grid(True)
+plt.show()
+
+#T10
+import numpy as np
+import matplotlib.pyplot as plt
+
+alpha = 0.5  # مقدار آلفا را تنظیم کنید
+
+def x(t):
+    return (0 <= t <= 1)
+
+def h(t):
+    return x(t / alpha)
+
+t = np.arange(-1, 2, 0.1)
+y = np.convolve([x(ti) for ti in t], [h(ti) for ti in t], mode='same')
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('y(t) = x(t) * h(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T11
+import numpy as np
+import matplotlib.pyplot as plt
+
+def x(t):
+    return (3 <= t <= 5)
+
+def h(t):
+    return np.exp(-3 * t) * (t >= 0)
+
+t = np.arange(0, 10, 0.1)
+y = np.convolve([x(ti) for ti in t], [h(ti) for ti in t], mode='full')
+dx = np.gradient([x(ti) for ti in t], 0.1)
+g = np.convolve(dx, [h(ti) for ti in t], mode='full')
+
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.plot(y)
+plt.title('y(t) = x(t) * h(t)')
+plt.subplot(1, 2, 2)
+plt.plot(g)
+plt.title('g(t) = dx(t)/dt * h(t)')
+plt.tight_layout()
+plt.show()
+
+#T12
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(t):
+    result = 0
+    for k in range(-5, 5):  # بازه زمانی مناسب را انتخاب کنید
+        result += np.exp(-(t - 3 * k)) * ((t - 3 * k) >= 0)
+    return result
+
+t = np.arange(0, 10, 0.1)
+y_values = [y(ti) for ti in t]
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y_values)
+plt.title('y(t)')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+#T13
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h(n):
+    return (1/5)**n * (n >= 0)
+
+# (الف)
+A = 1/5
+print(f"مقدار A: {A}")
+
+# (ب)
+# g[n] = 5 * delta[n] - delta[n-1]
+def g(n):
+    if n == 0:
+        return 5
+    elif n == 1:
+        return -1
+    else:
+        return 0
+
+n = np.arange(-2, 5)
+h_values = h(n)
+g_values = [g(i) for i in n]
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.stem(n, h_values)
+plt.title('h[n]')
+plt.subplot(1, 2, 2)
+plt.stem(n, g_values)
+plt.title('g[n]')
+plt.tight_layout()
+plt.show()
+
+#T14
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h1(t):
+    return np.exp(-abs(t - 2)) * (t >= 0)
+
+def h2(t):
+    return np.exp(-t) * np.cos(2 * t) * (t >= 0)
+
+t = np.arange(0, 5, 0.1)
+y1 = h1(t)
+y2 = h2(t)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.plot(t, y1)
+plt.title('h1(t)')
+plt.subplot(1, 2, 2)
+plt.plot(t, y2)
+plt.title('h2(t)')
+plt.tight_layout()
+plt.show()
+
+# برای بررسی پایداری، انتگرال مطلق را بررسی کنید (به صورت عددی)
+print(f"انتگرال h1: {np.sum(np.abs(y1)) * 0.1}")
+print(f"انتگرال h2: {np.sum(np.abs(y2)) * 0.1}")
+
+#T15
+import numpy as np
+import matplotlib.pyplot as plt
+
+def h1(n):
+    return n * np.cos(np.pi / 4 * n) * (n >= 0)
+
+def h2(n):
+    return 3**n * (n <= 10)
+
+n = np.arange(0, 15)
+y1 = h1(n)
+y2 = h2(n)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.stem(n, y1)
+plt.title('h1[n]')
+plt.subplot(1, 2, 2)
+plt.stem(n, y2)
+plt.title('h2[n]')
+plt.tight_layout()
+plt.show()
+
+# برای بررسی پایداری، مجموع مطلق را بررسی کنید
+print(f"مجموع h1: {np.sum(np.abs(y1))}")
+print(f"مجموع h2: {np.sum(np.abs(y2))}")
+
+#T16
+import numpy as np
+
+# (الف)
+x = np.array([1, 2, 3])
+h = np.array([4, 5, 6])
+y = np.convolve(x, h)
+print(f"کانولوشن: {y}")
+
+# (ب)
+x = np.array([1, 2, 3])
+h = np.array([4, 5, 6])
+y = np.convolve(x, h)
+y_shifted = np.convolve(np.roll(x, -1), np.roll(h, -1))
+print(f"y[n-1]: {y_shifted}")
+
+# (ج)
+# ...
+
+# (د)
+# ...
+
+#T17
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(t, x):
+    # حل معادله دیفرانسیل به صورت عددی
+    dt = 0.01
+    y_values = [0]
+    for i in range(1, len(t)):
+        dy = x[i] - 4 * y_values[i - 1]
+        y_values.append(y_values[i - 1] + dy * dt)
+    return np.array(y_values)
+
+t = np.arange(0, 5, 0.01)
+
+# (الف)
+x1 = np.exp(-t) * (t >= 0)
+y1 = y(t, x1)
+
+# (ب)
+x2 = np.exp(-t) * np.cos(3 * t) * (t >= 0)
+y2 = y(t, x2)
+
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.plot(t, y1)
+plt.title('y(t) for x1(t)')
+plt.subplot(1, 2, 2)
+plt.plot(t, y2)
+plt.title('y(t) for x2(t)')
+plt.tight_layout()
+plt.show()
+
+#T18
+import numpy as np
+import matplotlib.pyplot as plt
+
+def y(x):
+    y_values = [0]
+    for i in range(1, len(x)):
+        y_values.append(0.25 * y_values[i - 1] + x[i])
+    return np.array(y_values)
+
+n = np.arange(0, 10)
+x = np.ones(10)
+y_values = y(x)
+
+plt.figure(figsize=(8, 4))
+plt.stem(n, y_values)
+plt.title('y[n]')
+plt.xlabel('n')
+plt.ylabel('y[n]')
+plt.grid(True)
+plt.show()
+
+#T19
+import numpy as np
+import matplotlib.pyplot as plt
+
+# (الف)
+alpha = 0.75
+beta = 1
+print(f"مقدار آلفا: {alpha}")
+print(f"مقدار بتا: {beta}")
+
+# (ب)
+def h1(n):
+    if n == 0:
+        return 1
+    else:
+        return 0.5 * h1(n - 1)
+
+def h2(n):
+    if n == 0:
+        return beta
+    else:
+        return alpha * h2(n - 1)
+
+def h_cascade(n):
+    result = 0
+    for k in range(n + 1):
+        result += h1(k) * h2(n - k)
+    return result
+
+n = np.arange(0, 5)
+h_values = [h_cascade(i) for i in n]
+
+plt.figure(figsize=(8, 4))
+plt.stem(n, h_values)
+plt.title('پاسخ ضربه سیستم متوالی')
+plt.xlabel('n')
+plt.ylabel('h[n]')
+plt.grid(True)
+plt.show()
+
+#T20
+import numpy as np
+import sympy as sp
+
+# (الف)
+t = sp.Symbol('t')
+integral_a = sp.integrate(sp.cos(t), (t, -sp.oo, sp.oo))
+print(f"انتگرال (الف): {integral_a}")
+
+# (ب)
+integral_b = sp.integrate(sp.sin(2 * sp.pi * t) * sp.DiracDelta(t + 3), (t, 0, 5))
+print(f"انتگرال (ب): {integral_b}")
+
+# (ج)
+tau = sp.Symbol('tau')
+integral_c = sp.integrate(sp.Heaviside(1 - tau) * sp.cos(2 * sp.pi * tau), (tau, -5, 5))
+print(f"انتگرال (ج): {integral_c}")
+
+
+#T21
+import numpy as np
+import matplotlib.pyplot as plt
+
+# (الف)
+def convolution_a(n):
+    return (n + 1) * (n >= 0)
+
+# (ب)
+def convolution_b(n, a, b):
+    if a == b:
+        return (n + 1) * a**n * (n >= 0)
+    else:
+        return (a**(n + 1) - b**(n + 1)) / (a - b) * (n >= 0)
+
+# (ج)
+def convolution_c(n):
+    result = 0
+    for k in range(-10, 10):
+        if 2 - k >= -10 and 2 - k <= 10 and n - k >= 4 and n - k <= 10:
+            result += (-0.5)**(n - k) * 4**k
+    return result
+
+# (د)
+x = np.array([0, 0, 1, 1, 1, 0, 0])
+h = np.array([0, 0, 0, 0, 1, 1, 1, 1, 0, 0])
+y_d = np.convolve(x, h)
+
+n = np.arange(0, 10)
+y_a = convolution_a(n)
+y_b = convolution_b(n, 0.5, 0.8)
+y_c = [convolution_c(i) for i in n]
+
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 2, 1)
+plt.stem(n, y_a)
+plt.title('کانولوشن (الف)')
+plt.subplot(2, 2, 2)
+plt.stem(n, y_b)
+plt.title('کانولوشن (ب)')
+plt.subplot(2, 2, 3)
+plt.stem(n, y_c)
+plt.title('کانولوشن (ج)')
+plt.subplot(2, 2, 4)
+plt.stem(np.arange(len(y_d)), y_d)
+plt.title('کانولوشن (د)')
+plt.tight_layout()
+plt.show()
+
+#T22
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
+
+# مثال 1: x(t) = u(t), h(t) = e^-t u(t)
+t = np.arange(0, 5, 0.1)
+x = np.ones(len(t))
+h = np.exp(-t)
+y = signal.convolve(x, h, mode='same') * 0.1
+
+plt.figure(figsize=(8, 4))
+plt.plot(t, y)
+plt.title('کانولوشن مثال 1')
+plt.xlabel('t')
+plt.ylabel('y(t)')
+plt.grid(True)
+plt.show()
+
+# مثال 2: x(t) = rect(t), h(t) = tri(t)
+# ... (محاسبات و رسم نمودار برای مثال‌های دیگر)
+
+
+#T23
